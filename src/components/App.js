@@ -1,7 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { Header, Footer } from "./Layouts";
 
 export default class App extends Component {
   render() {
-    return <div>App Component</div>;
+    return (
+      <Fragment>
+        <Header />
+        <Footer />
+      </Fragment>
+    );
   }
 }
