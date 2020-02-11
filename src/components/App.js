@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Header, Footer } from "./Layouts";
 import Exercises from "./Exercises";
 import { muscles, exercises } from "../store";
-import { ThreeSixtyOutlined } from "@material-ui/icons";
 
 export default class App extends Component {
   state = {
@@ -11,6 +10,10 @@ export default class App extends Component {
   };
 
   getExercisesByMuscles() {
+    const initExercises = muscles.reduce(
+      (exercises, category) => ({ ...exercises, [category]: [] }),
+      {}
+    );
     return Object.entries(
       this.state.exercises.reduce((exercises, exercise) => {
         const { muscles } = exercise;
@@ -20,7 +23,7 @@ export default class App extends Component {
           : [exercise];
 
         return exercises;
-      }, {})
+      }, initExercises)
     );
   }
 
@@ -40,6 +43,12 @@ export default class App extends Component {
     }));
   };
 
+  handleExerciseDelete = id => {
+    this.setState(({ exercises }) => ({
+      exercises: exercises.filter(ex => ex.id !== id)
+    }));
+  };
+
   render() {
     const exercises = this.getExercisesByMuscles(),
       { category, exercise } = this.state;
@@ -54,6 +63,7 @@ export default class App extends Component {
           category={category}
           exercises={exercises}
           onSelect={this.handleExerciseSelected}
+          onDelete={this.handleExerciseDelete}
         />
         <Footer
           category={category}
