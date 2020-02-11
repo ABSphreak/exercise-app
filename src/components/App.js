@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Header, Footer } from "./Layouts";
 import Exercises from "./Exercises";
 import { muscles, exercises } from "../store";
+import { ThreeSixtyOutlined } from "@material-ui/icons";
 
 export default class App extends Component {
   state = {
@@ -33,12 +34,21 @@ export default class App extends Component {
     }));
   };
 
+  handleExerciseCreate = exercise => {
+    this.setState(({ exercises }) => ({
+      exercises: [...exercises, exercise]
+    }));
+  };
+
   render() {
     const exercises = this.getExercisesByMuscles(),
       { category, exercise } = this.state;
     return (
       <Fragment>
-        <Header />
+        <Header
+          muscles={muscles}
+          onExerciseCreate={this.handleExerciseCreate}
+        />
         <Exercises
           exercise={exercise}
           category={category}
