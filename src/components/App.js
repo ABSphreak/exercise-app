@@ -23,20 +23,25 @@ export default class App extends Component {
   }
 
   handleCategorySelected = category => {
-    this.setState({});
+    this.setState({ category });
   };
 
   render() {
-    const exercises = this.getExercisesByMuscles();
-    {category} = this.state;
+    const exercises = this.getExercisesByMuscles(),
+      { category } = this.state;
     return (
       <Fragment>
         <Header />
-        <Exercises exercises={exercises} />
+        <Exercises
+          category={category}
+          exercises={exercises}
+          onSelect={this.handleCategorySelected}
+        />
         <Footer
-        category={category}
-        muscles={muscles}
-        onSelect={this.handleCategorySelected} />
+          category={category}
+          muscles={muscles}
+          onSelect={this.handleCategorySelected}
+        />
       </Fragment>
     );
   }
